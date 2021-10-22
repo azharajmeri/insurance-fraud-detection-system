@@ -13,7 +13,7 @@ $('#submit_details').click(function(){
         success: function(response){
             console.log(response)
             var arr = response.split(",")
-            window.location = "http://127.0.0.1:8000/result?fraud="+arr[0]+"&NP="+arr[1]+"&PP="+arr[2];
+            window.location = "https://cgc-project.herokuapp.com/result?fraud="+arr[0]+"&NP="+arr[1]+"&PP="+arr[2];
         }
     });
 
