@@ -1,0 +1,37 @@
+<div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
+    <h3 class="multisteps-form__title">Additional Information</h3>
+    <div class="multisteps-form__content">
+      <div class="form-row mt-4">
+        <div class="col-12 col-md-6 mt-2">
+            <input type="number" class="form-control" name="witnessess" aria-describedby="ageHelp" placeholder="Enter Witnessess">
+        </div>
+        <div class="col-12 col-md-6 mt-2 input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Authorities Contacted</label>
+          </div>
+          <select class="custom-select" name="autorities_contacted" aria-label="Default select example">
+            <option value=Police>Police</option>
+            <option value=None>None</option>
+            <option value=Fire>Fire</option>
+            <option value=Other>Other</option>
+            <option value=Ambulance>Ambulance</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row mt-4">
+        <div class="col-12 col-md-6 mt-2 input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Police Report Available</label>
+          </div>
+          <select class="custom-select" name="policy_report_available" aria-label="Default select example">
+            <option value=Yes>Yes</option>
+            <option value=No>No</option>
+          </select>
+        </div>
+      </div>
+      <div class="button-row d-flex mt-4">
+        <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+        <button id="submit_details" class="btn btn-success ml-auto" type="button" title="Send">Send</button>
+      </div>
+    </div>
+  </div>
