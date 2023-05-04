@@ -1,16 +1,17 @@
+from django.conf import settings
 from django.shortcuts import render, HttpResponse
 import requests
+
 
 def home(request):
     return render(request, "index.html")
 
+
 def fraud_detection(request):
-    if request.method == 'POST':
-        print(request.POST['age'], "------------------------")
-    
     # NOTE: you must manually set API_KEY below using information retrieved from your IBM Cloud account.
-    API_KEY = "YnlkkR_ZgrYqWQsmbP7EFzGrzyN_Ds5j8Sgw4Vwygn-a"
-    token_response = requests.post('https://iam.cloud.ibm.com/identity/token', data={"apikey": API_KEY, "grant_type": 'urn:ibm:params:oauth:grant-type:apikey'})
+    API_KEY = settings.IBM_MODEL_API_KEY
+    token_response = requests.post('https://iam.cloud.ibm.com/identity/token',
+                                   data={"apikey": API_KEY, "grant_type": 'urn:ibm:params:oauth:grant-type:apikey'})
     mltoken = token_response.json()["access_token"]
 
     header = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + mltoken}
@@ -53,7 +54,7 @@ def fraud_detection(request):
                     "auto_make",
                     "auto_model",
                     "auto_year"
-			    ],
+                ],
                 "values": [[
                     request.POST['month_as_customer'],
                     request.POST['age'],
@@ -93,11 +94,14 @@ def fraud_detection(request):
         ]
     }
 
-    response_scoring = requests.post('https://us-south.ml.cloud.ibm.com/ml/v4/deployments/8d31dc0c-4cf1-4819-a6d4-f294ea7946fe/predictions?version=2021-10-21&version=2021-10-21', json=payload_scoring, headers={'Authorization': 'Bearer ' + mltoken})
-    print("Scoring response")
-    print(response_scoring.json())
+    response_scoring = requests.post(
+        'https://us-south.ml.cloud.ibm.com/ml/v4/deployments/8d31dc0c-4cf1-4819-a6d4-f294ea7946fe/predictions?version=2021-10-21&version=2021-10-21',
+        json=payload_scoring, headers={'Authorization': 'Bearer ' + mltoken})
     x = response_scoring.json()
-    return HttpResponse(x['predictions'][0]["values"][0][0] + "," + str(x['predictions'][0]["values"][0][1][0])+ "," + str(x['predictions'][0]["values"][0][1][1]))
+    return HttpResponse(
+        x['predictions'][0]["values"][0][0] + "," + str(x['predictions'][0]["values"][0][1][0]) + "," + str(
+            x['predictions'][0]["values"][0][1][1]))
+
 
 def result(request):
     return render(request, "result.html")
